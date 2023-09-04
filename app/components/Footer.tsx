@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { Box, Container, Grid, Link, Typography } from "@mui/material";
-import Image from "next/image";
+import { Box, BottomNavigation,Container, Grid, Link, Typography, BottomNavigationAction } from "@mui/material";
+'@mui/material/'
 import {
   Facebook,
   Instagram,
@@ -10,9 +10,10 @@ import {
   GitHub,
   LinkedIn,
 } from "@mui/icons-material";
-
+import '../styles/global.css';
 import logo from "../img/logo.png";
-
+import '../styles/global.css';
+import Image from "next/image";
 const Footer: React.FC = () => {
   const socialMediaLinks = [
     { icon: <Facebook />, url: "https://www.facebook.com/" },
@@ -37,8 +38,13 @@ const Footer: React.FC = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Box>
-              <Link href="/" underline="none">
-                <Image src={logo} height={30} width={180} alt="Simpsoft Logo" />
+              <Link href="/">
+                  <Image
+                    src={logo}
+                    height={30}
+                    width={180}
+                    alt="Simpsoft Logo"
+                  />
               </Link>
               <Typography variant="body2" sx={{ marginTop: 2 }}>
                 We are a technology company dedicated to innovation and
@@ -90,6 +96,24 @@ const Footer: React.FC = () => {
             <Typography variant="h6" sx={{ marginBottom: 2 }}>
               Social Media
             </Typography>
+          </Grid>
+        </Grid>
+        <Typography variant="body2" sx={{ marginTop: 3, textAlign: "center" }}>
+          © Simpsoft 2023. All rights reserved.
+        </Typography>
+        <BottomNavigation sx={{ background: "#222" }}>
+          <BottomNavigationAction
+            sx={{
+              "& .MuiSvgIcon-root": {
+                fill: "tan",
+                "&:hover": {
+                  fill: "tomato",
+                  fontSize: "1.8rem",
+                },
+              },
+            }}
+          >
+            {" "}
             <Box sx={{ display: "flex" }}>
               {socialMediaLinks.map((link, index) => (
                 <Link
@@ -103,11 +127,8 @@ const Footer: React.FC = () => {
                 </Link>
               ))}
             </Box>
-          </Grid>
-        </Grid>
-        <Typography variant="body2" sx={{ marginTop: 3, textAlign: "center" }}>
-          © Simpsoft 2023. All rights reserved.
-        </Typography>
+          </BottomNavigationAction>
+        </BottomNavigation>
       </Container>
     </Box>
   );

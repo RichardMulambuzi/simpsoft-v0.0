@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -7,14 +7,12 @@ import {
   Container,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemText,
   Toolbar,
   Typography,
   useMediaQuery,
   useTheme,
-  useScrollTrigger,
   SwipeableDrawer,
 } from "@mui/material";
 import { motion } from "framer-motion";
@@ -22,14 +20,15 @@ import Link from "next/link";
 import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import ParticlesContainer from "../components/particlesContainer";
+import ParticlesContainer from "../animation/particlesContainer";
 import {
   menuSlideAnimation,
   navAnimation,
   hoverAnimation,
   fadeInUpAnimation,
   staggerAnimation,
-} from "../utils/animation/transition";
+  slideAnimation,
+} from "../animation/animation";
 
 const Header: React.FC = () => {
   const navLinksData = [
@@ -42,33 +41,42 @@ const Header: React.FC = () => {
   ];
 
   const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [navBackground, setNavBackground] = useState<string>("transparent");
 
-  const trigger = useScrollTrigger({
-    target: window,
-    disableHysteresis: true,
-    threshold: 700,
-  });
+  useEffect(() => {
+    const handleScroll = () => {
+      setNavBackground(window.scrollY > 500 ? "white" : "transparent");
+    };
 
-  const handleDrawerOpen = () => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const openDrawer = () => {
     setDrawerOpen(true);
   };
 
-  const handleDrawerClose = () => {
+  const closeDrawer = () => {
     setDrawerOpen(false);
   };
 
   return (
-    <Box
+    <Container
       sx={{
         position: "relative",
         width: "100vw",
         height: "100vh",
         marginTop: "-10px",
-        bgcolor: "#121212",
+        bgcolor: navBackground === "transparent" ? "transparent" : "#121212",
+        transition: "background-color 0.5s ease-in-out",
       }}
     >
+      <ParticlesContainer />
       <motion.div
         key={1}
         variants={fadeInUpAnimation}
@@ -77,13 +85,7 @@ const Header: React.FC = () => {
         exit="exit"
         transition={{ duration: 0.4 }}
       >
-        <motion.div
-          variants={staggerAnimation}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          <ParticlesContainer />
+        <motion.div variants={staggerAnimation} animate="animate">
           <motion.nav
             variants={navAnimation}
             animate="animate"
@@ -93,9 +95,8 @@ const Header: React.FC = () => {
           >
             <AppBar
               position="fixed"
-              className={`${trigger ? "MuiPaper-elevated blackAppBar" : ""}`}
               sx={{
-                backgroundColor: "transparent",
+                backgroundColor: navBackground,
                 boxShadow: "none",
                 transition: "background-color 0.5s ease-in-out",
                 "&.MuiPaper-elevated": {
@@ -103,44 +104,58 @@ const Header: React.FC = () => {
                 },
               }}
             >
-              <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  <Button component={Link} href="/" color="inherit">
-                    <Image src="/logo.png" height={30} width={180} alt="" />
-                  </Button>
-                </Typography>
+              <Toolbar
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Link href="/">
+                  <Image src="/logo.png" height={30} width={180} alt="" />
+                </Link>
 
-                {isMediumScreen ? (
+                {isMobileScreen ? (
                   <IconButton
                     color="inherit"
                     edge="start"
                     aria-label="menu"
-                    onClick={handleDrawerOpen}
+                    onClick={openDrawer}
                     sx={{
-                      color: "inherit",
+                      color:
+                        navBackground === "transparent" ? "white" : "black",
                       backgroundColor: "transparent",
                     }}
                   >
                     {drawerOpen ? <CloseIcon /> : <MenuIcon />}
                   </IconButton>
                 ) : (
-                  <Box>
+                  <Box sx={{ display: "flex", gap: "1rem" }}>
                     {navLinksData.map((link, index) => (
-                      <Button
+                      <motion.div
                         key={index}
-                        component={Link}
-                        href={link.href}
-                        color="inherit"
-                        sx={{
-                          color: "inherit",
-                          backgroundColor: "transparent",
-                        }}
                         variants={hoverAnimation}
                         whileHover="whileHover"
                         whileTap="whileTap"
                       >
-                        {link.text}
-                      </Button>
+                        <Button
+                          key={index}
+                          component={Link}
+                          href={link.href}
+                          color="inherit"
+                          sx={{
+                            color:
+                              navBackground === "transparent"
+                                ? "white"
+                                : "black",
+                            backgroundColor: "transparent",
+                            padding: "0.5rem 1rem",
+                            borderRadius: "0.5rem",
+                          }}
+                        >
+                          {link.text}
+                        </Button>
+                      </motion.div>
                     ))}
                   </Box>
                 )}
@@ -149,23 +164,28 @@ const Header: React.FC = () => {
           </motion.nav>
           <motion.div
             key={1}
+            variants={menuSlideAnimation}
             animate="animate"
             exit="exit"
             initial="initial"
-            variants={menuSlideAnimation}
             transition={{ duration: 1, ease: "easeInOut" }}
           >
             <SwipeableDrawer
               anchor="top"
               open={drawerOpen}
-              onClose={handleDrawerClose}
+              onClose={closeDrawer}
               onOpen={() => {}}
-              sx={{ zIndex: 1500 }}
+              sx={{
+                zIndex: 1500,
+                width: "80vw",
+                maxWidth: "400px",
+              }}
             >
-              {" "}
               <motion.div
-                whileTap={{ scale: 0.9 }} // Add the animation here
-                onClick={handleDrawerClose}
+                variants={hoverAnimation}
+                whileHover="whileHover"
+                whileTap="whileTap"
+                onClick={closeDrawer}
               >
                 <CloseIcon
                   sx={{
@@ -179,15 +199,16 @@ const Header: React.FC = () => {
                 {navLinksData.map((text, index) => (
                   <ListItemButton
                     key={text.text}
-                    onClick={handleDrawerClose}
+                    onClick={closeDrawer}
                     sx={{
-                      color: "inherit",
                       backgroundColor: "transparent",
+                      color:
+                        navBackground === "transparent" ? "white" : "black",
                     }}
                   >
                     <motion.div
                       custom={index}
-                      variants={menuSlideAnimation}
+                      variants={slideAnimation(index)}
                       animate="animate"
                       exit="exit"
                       initial="initial"
@@ -204,9 +225,49 @@ const Header: React.FC = () => {
               </List>
             </SwipeableDrawer>
           </motion.div>
+          <motion.div
+            key={1}
+            variants={staggerAnimation}
+            animate="animate"
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            <Container
+              sx={{
+                paddingTop: 35,
+                position: "relative",
+                zIndex: 1000,
+                textAlign: "center",
+              }}
+            >
+              <Typography
+                variant="h2"
+                component="h1"
+                color={
+                  navBackground === "transparent"
+                    ? "common.white"
+                    : "common.black"
+                }
+                fontWeight="600"
+              >
+                Welcome to my website
+              </Typography>
+              <Typography
+                variant="h6"
+                component="p"
+                color={
+                  navBackground === "transparent"
+                    ? "common.white"
+                    : "common.black"
+                }
+                fontWeight="600"
+              >
+                CREATORS OF WORLD-CLASS WEBSITES
+              </Typography>
+            </Container>
+          </motion.div>
         </motion.div>
       </motion.div>
-    </Box>
+    </Container>
   );
 };
 

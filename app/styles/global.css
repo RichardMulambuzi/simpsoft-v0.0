@@ -17,3 +17,13 @@
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
+body {
+    background: url(/app/coffee-apple.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.no-underline {
+    text-decoration: none;
+}

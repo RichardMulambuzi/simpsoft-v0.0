@@ -1,14 +1,15 @@
+"use client";
 import React from "react";
 import { Container, Typography, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
-import { fadeInUpAnimation, staggerAnimation } from "../utils/animation/transition";
+import { fadeInUpAnimation, staggerAnimation } from "../animation/animation";
 const AboutPage: React.FC = () => {
   return (
     <motion.div variants={fadeInUpAnimation}>
       <Container sx={{ padding: 20, backgroundColor: "#f2f2f2" }}>
         <Avatar
-          alt="Your Name"
-          src="/img/slider.jpg"
+          alt="Richard Mlambuzi"
+          src="/asset/img/shapes/star.png"
           sx={{ width: 100, height: 100 }}
         />{" "}
         <motion.div variants={staggerAnimation} className="div">

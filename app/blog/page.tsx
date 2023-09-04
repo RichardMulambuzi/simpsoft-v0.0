@@ -1,8 +1,8 @@
+"use client";
 import React from "react";
-import Layout from "../pages/Layout";
 import { Container, Typography, Card, CardContent } from "@mui/material";
 import { motion } from "framer-motion";
-import { fadeInUpAnimation, staggerAnimation } from "../utils/animation/transition";
+import { fadeInUpAnimation, staggerAnimation } from "../animation/animation";
 
 const BlogPage: React.FC = () => {
   const blogPosts = [
@@ -14,15 +14,15 @@ const BlogPage: React.FC = () => {
     <motion.div variants={fadeInUpAnimation}>
       <Container>
         <motion.div variants={staggerAnimation} className="div">
-      <Typography variant="h4">Blog</Typography>
-      {blogPosts.map((post, index) => (
-        <Card key={index}>
-          <CardContent>
-            <Typography variant="h6">{post.title}</Typography>
-            <Typography variant="body2">{post.summary}</Typography>
-          </CardContent>
-        </Card>
-      ))}
+          <Typography variant="h4">Blog</Typography>
+          {blogPosts.map((post, index) => (
+            <Card key={index}>
+              <CardContent>
+                <Typography variant="h6">{post.title}</Typography>
+                <Typography variant="body2">{post.summary}</Typography>
+              </CardContent>
+            </Card>
+          ))}
         </motion.div>
       </Container>
     </motion.div>
