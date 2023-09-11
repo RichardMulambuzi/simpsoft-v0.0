@@ -1,7 +1,16 @@
 "use client";
 import React from "react";
-import { Box, BottomNavigation,Container, Grid, Link, Typography, BottomNavigationAction } from "@mui/material";
-'@mui/material/'
+import {
+  Box,
+  BottomNavigation,
+  Container,
+  Grid,
+  Link,
+  Typography,
+  BottomNavigationAction,
+  Button,
+} from "@mui/material";
+("@mui/material/");
 import {
   Facebook,
   Instagram,
@@ -10,10 +19,12 @@ import {
   GitHub,
   LinkedIn,
 } from "@mui/icons-material";
-import '../styles/global.css';
+import "../styles/global.css";
 import logo from "../img/logo.png";
-import '../styles/global.css';
+import "../styles/global.css";
 import Image from "next/image";
+import { hoverAnimation } from "../animation/animation";
+import { motion } from "framer-motion";
 const Footer: React.FC = () => {
   const socialMediaLinks = [
     { icon: <Facebook />, url: "https://www.facebook.com/" },
@@ -23,7 +34,14 @@ const Footer: React.FC = () => {
     { icon: <GitHub />, url: "https://www.github.com/" },
     { icon: <LinkedIn />, url: "https://www.linkedin.com/" },
   ];
-
+  const navLinksData = [
+    { text: "Home", href: "/" },
+    { text: "About us", href: "/about" },
+    { text: "Services and prices", href: "/services&prices" },
+    { text: "Blog", href: "/blog" },
+    { text: "Portfolio", href: "/portfolio" },
+    { text: "Contacts", href: "/contacts" },
+  ];
   return (
     <Box
       sx={{
@@ -39,12 +57,7 @@ const Footer: React.FC = () => {
           <Grid item xs={12} md={6}>
             <Box>
               <Link href="/">
-                  <Image
-                    src={logo}
-                    height={30}
-                    width={180}
-                    alt="Simpsoft Logo"
-                  />
+                <Image src={logo} height={30} width={180} alt="Simpsoft Logo" />
               </Link>
               <Typography variant="body2" sx={{ marginTop: 2 }}>
                 We are a technology company dedicated to innovation and
@@ -56,41 +69,29 @@ const Footer: React.FC = () => {
             <Typography variant="h6" sx={{ marginBottom: 2 }}>
               Navigation
             </Typography>
-            <Link
-              href="/about"
-              color="inherit"
-              sx={{ display: "block", marginBottom: 1 }}
-            >
-              About
-            </Link>
-            <Link
-              href="/contact"
-              color="inherit"
-              sx={{ display: "block", marginBottom: 1 }}
-            >
-              Contact
-            </Link>
-            <Link
-              href="/services"
-              color="inherit"
-              sx={{ display: "block", marginBottom: 1 }}
-            >
-              Services
-            </Link>
-            <Link
-              href="/projects"
-              color="inherit"
-              sx={{ display: "block", marginBottom: 1 }}
-            >
-              Projects
-            </Link>
-            <Link
-              href="/portfolio"
-              color="inherit"
-              sx={{ display: "block", marginBottom: 1 }}
-            >
-              Portfolio
-            </Link>
+            {navLinksData.map((link, index) => (
+              <motion.div
+                key={index}
+                variants={hoverAnimation}
+                whileHover="whileHover"
+                whileTap="whileTap"
+              >
+                {" "}
+                <Button
+                  key={index}
+                  component={Link}
+                  href={link.href}
+                  color="inherit"
+                  sx={{
+                    display: "block",
+                    marginBottom: 1,
+                  }}
+                >
+                  {link.text}
+                </Button>
+              </motion.div>
+            ))}
+            ;
           </Grid>
           <Grid item xs={12} md={3}>
             <Typography variant="h6" sx={{ marginBottom: 2 }}>

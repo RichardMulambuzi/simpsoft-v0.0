@@ -193,13 +193,9 @@ const Homepage = () => {
           width: "1400px",
           scrollSnapAlign: "center",
           display: "flex",
-          justifyContent: "center",
-          scrollSnapType: "y mandatory",
-          scrollBehavior: "smooth",
-          overflowY: "auto",
+          justifyContent: "center", background: "#233"
         }}
       >
-        <Box style={{ background: "#233", height: "100%" }}>
           <Grid container justifyContent="center" spacing={3}>
             {/* Render project cards */}
             {projects.map((project, i) => (
@@ -233,7 +229,6 @@ const Homepage = () => {
               </Grid>
             ))}
           </Grid>
-        </Box>
       </Container>
       {/* {"SECTION 3"} */}
       <Container
