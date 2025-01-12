@@ -1,0 +1,171 @@
+/* Import Tailwind CSS utilities */
+@import "./base.css";
+@tailwind components;
+@tailwind utilities;
+
+/* Global Box Model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* Ensure consistent sizing for all elements */
+}
+
+/* Custom CSS Variables */
+:root {
+  --background: #ffffff;
+  /* Default background color */
+  --foreground: #171717;
+  /* Default text color */
+  --link-color: #1d4ed8;
+  /* Link color */
+  --link-hover-color: #2563eb;
+  /* Hover link color */
+  --primary-color: #22c55e;
+  /* Primary color for custom components */
+  --secondary-color: #16a34a;
+  /* Secondary color for gradients */
+  --tertiary-color: #10b981;
+  /* Tertiary color for animations */
+  --green-color: #4ade80;
+  /* Gradient green color */
+}
+
+/* General Styles */
+html {
+  line-height: 1.15;
+  /* Improve readability */
+  -webkit-text-size-adjust: 100%;
+  /* Prevent font scaling on iOS */
+}
+
+body {
+  margin: 0;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  -ms-overflow-style: none;
+  /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none;
+  /* Hide scrollbar for Firefox */
+}
+
+/* Hide scrollbar for Webkit browsers */
+body::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Opera */
+}
+
+/* Utility Classes */
+.vibrate {
+  animation: vibrate 0.5s ease-in-out;
+  /* Apply vibrate animation */
+}
+
+.rounded {
+  border-radius: 0.25rem;
+  /* Default border radius */
+}
+
+.shadow {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Default shadow */
+}
+
+.bruh-bg {
+  background-color: var(--primary-color);
+  /* Background using the primary color */
+}
+
+.bg-animated-gradient {
+  background: linear-gradient(270deg, var(--green-color), var(--secondary-color));
+  background-size: 200% 200%;
+  animation: gradient-move 10s ease infinite;
+  /* Smooth animated gradient background */
+}
+
+.animated-text-gradient {
+  background: linear-gradient(270deg, var(--tertiary-color), var(--secondary-color));
+  background-size: 200% 400%;
+  animation: gradient-move 10s ease infinite;
+  -webkit-background-clip: text;
+  /* Clip the background to the text */
+  -webkit-text-fill-color: transparent;
+  /* Make the text transparent to reveal gradient */
+}
+
+/* Header Styles */
+.header {
+  @apply flex items-center justify-between p-4 bg-green-800 text-white;
+  /* Header with flex layout, padding, and custom colors */
+}
+
+/* Card Styles */
+.card {
+  @apply bg-white shadow-md rounded-lg p-6;
+  /* Card styling: background, shadow, rounded corners, padding */
+}
+
+/* Link Styles */
+a {
+  color: var(--link-color);
+  /* Default link color */
+  text-decoration: none;
+  /* Remove underline */
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  /* Change color on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+    /* Reduce padding on smaller screens */
+  }
+}
+
+/* Keyframes for Animations */
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-2px);
+  }
+
+  40% {
+    transform: translateX(2px);
+  }
+
+  60% {
+    transform: translateX(-2px);
+  }
+
+  80% {
+    transform: translateX(2px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
