@@ -4,7 +4,7 @@ export const testimonials: Testimonial[] = [
     {
         id: 1,
         full_name: 'Chikumbutso Chithope',
-        role: 'Agricultural Manager',
+        role: 'Client',
         testimonial: 'I have witnessed the significant positive impact of our sustainable farming practices on the local community.',
         avatar_url: null, 
          blur_data_URL: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwkHBgoJCAkLCwoMDxwQDw4NDxwVFRcXGB4lHygeJCAmIyIoKSMgLCwmKSMgJikZ...' // Provide the actual base64 data URL
