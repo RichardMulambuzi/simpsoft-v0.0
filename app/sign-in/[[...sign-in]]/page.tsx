@@ -19,7 +19,7 @@ const Login = () => {
   return (
     <main className="font-sans bg-gray-50 min-h-screen flex flex-col">
       {/* Header */}
-      <header className="w-full bg-green-900 h-16 shadow-md">
+      <header className="w-full bg-primary h-16 flex items-center justify-center shadow-md">
         <Header />
       </header>
 
