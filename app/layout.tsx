@@ -59,10 +59,7 @@ export default function RootLayout({
       <html lang="en">
         <head>
           {/* Metadata for SEO and Site Verification */}
-          <meta
-            name="google-site-verification"
-            content="ZGYhzUzi9r4WuQvdAY8xokvKvbcXsMoXmlUsgYarBHM"
-          />
+          <meta name="google-adsense-account" content="ca-pub-2409118903033446">
           {/* Google Analytics Setup */}
           <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-1Z08WSTH5L"
